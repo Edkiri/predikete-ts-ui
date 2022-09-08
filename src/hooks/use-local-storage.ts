@@ -1,24 +1,27 @@
 import { useState } from 'react';
 
 type UseLocalStorageResponse<T> = {
-  storedValue: T | undefined;
-  setLocalStorage: (value: T | undefined) => void;
+  storedValue: T | null;
+  setLocalStorage: (value: T | null) => void;
 };
 
 export const useLocalStorage = <T>(
   key: string,
-  initialValue?: T | undefined,
+  initialValue?: T | null,
 ): UseLocalStorageResponse<T> => {
-  const [storedValue, setStoredValue] = useState((): T | undefined => {
+  const [storedValue, setStoredValue] = useState((): T | null => {
     try {
       const item = window.localStorage.getItem(key);
       return item !== null ? JSON.parse(item) : initialValue;
     } catch (e) {
-      return initialValue;
+      if (initialValue === undefined) {
+        return null;
+      }
+      return null;
     }
   });
 
-  const setLocalStorage = (value: T | undefined) => {
+  const setLocalStorage = (value: T | null) => {
     try {
       window.localStorage.setItem(key, JSON.stringify(value));
       setStoredValue(value);

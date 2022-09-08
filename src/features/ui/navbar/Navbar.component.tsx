@@ -13,15 +13,6 @@ export function Navbar({ hideMenu }: NavbarProps) {
         <Link onClick={hideMenu} to="/">
           Home
         </Link>
-        <Link onClick={hideMenu} to="/">
-          My groups
-        </Link>
-        <Link onClick={hideMenu} to="/">
-          Search
-        </Link>
-        <Link onClick={hideMenu} to="/">
-          Rules
-        </Link>
       </ul>
     </nav>
   );
