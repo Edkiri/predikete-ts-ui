@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import { Layout } from './features/ui';
@@ -6,12 +5,15 @@ import { Home } from './pages';
 
 import './global.css';
 import { AppContext } from './App.context';
+import { RequireAuth } from './features/user/require-auth.Component';
 
 export function App() {
   return (
     <Layout>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <RequireAuth>
+          <Route path="/" element={<Home />} />
+        </RequireAuth>
       </Routes>
     </Layout>
   );
