@@ -1,0 +1,85 @@
+.HomeContainer .HomeBgImage {
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 0px;
+  bottom: 0px;
+  background-image: url("../../assets/hero.jpg");
+  background-position: center;
+  background-size: cover;
+  z-index: -1;
+}
+.HomeContainer .overlay {
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: -1;
+  background-color: rgba(0,0,0,0.7);
+} 
+.HeroContainer {
+  max-width: 650px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  z-index: 2;
+  padding: 24px 16px ;
+  color: white;
+}
+.HeroContainer h1 {
+  text-align: center;
+  width: 100%;
+  max-width: 400px;
+  font-size: 2.8rem;
+}
+.HeroContainer h1 strong {
+  border-bottom: 3px solid var(--color-orange);
+}
+.LogoImage {
+  object-fit: cover;
+  width: 90px;
+  margin: 0 auto;
+}
+.HeroImage {
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  left: -4px;
+  z-index: 0;
+  opacity: .2;
+}
+.ForFree {
+  margin-top: 20px;
+  font-size: var(--font-size-large);
+  font-weight: 700;
+  text-align: center;
+  color: white;
+}
+.ForFree span {
+  color: var(--color-orange)
+}
+.HeroSubtitle {
+  text-align: center;
+  font-size: var(--font-size-large);
+  padding: 0px 20px;
+  max-width: 365px;
+  margin: 0 auto;
+  margin-top: 20px;
+  z-index: 2;
+  color: white;
+}
+.StartButton {
+  font-size: var(--font-size-large);
+  font-weight: 700;
+  color: #FFF;
+  background-color: var(--color-orange);
+  border: none;
+  cursor: pointer;
+  margin: 30px auto;
+  padding: 8px;
+  border-radius: 5px;
+  display: block;
+  z-index: 2;
+}
