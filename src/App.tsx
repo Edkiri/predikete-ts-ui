@@ -2,12 +2,11 @@ import { useMemo } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import { Layout } from './features/ui';
-import { Home } from './pages';
 
-import './global.css';
 import { AppContext } from './App.context';
 import { RequireAuth, useAuth } from './features/user';
-import { Login } from './pages/login/Login';
+import { Budget, Home, Login } from './pages';
+import './global.css';
 
 export function App() {
   return (
@@ -19,6 +18,14 @@ export function App() {
           element={
             <RequireAuth>
               <Home />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/budgets"
+          element={
+            <RequireAuth>
+              <Budget />
             </RequireAuth>
           }
         />

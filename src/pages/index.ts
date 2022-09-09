@@ -1,1 +1,3 @@
-export * from './home/Home.component';
+export * from './home/Home';
+export * from './budget/Budget';
+export * from './login/Login';

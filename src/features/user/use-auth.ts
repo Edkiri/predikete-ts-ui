@@ -3,7 +3,7 @@ import { User } from './interfaces/user.interface';
 
 export interface UseAuthResponse {
   user: User | null;
-  login: (payload: User) => void;
+  login: (payload: User | null) => void;
   logout: () => void;
 }
 
@@ -13,7 +13,7 @@ export const useAuth = (): UseAuthResponse => {
 
   return {
     user,
-    login: (payload: User) => {
+    login: (payload: User | null) => {
       setUser(payload);
     },
     logout: () => {
