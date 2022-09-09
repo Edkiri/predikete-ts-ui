@@ -22,7 +22,7 @@ export function App() {
           }
         />
         <Route
-          path="/budgets"
+          path="/budget"
           element={
             <RequireAuth>
               <Budget />

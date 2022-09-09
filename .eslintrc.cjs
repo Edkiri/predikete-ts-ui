@@ -28,5 +28,6 @@ module.exports = {
     '@typescript-eslint/naming-convention': 'off',
     'react/self-closing-comp': 'off',
     'react/destructuring-assignment': 'off',
+    'react/require-default-props': 'off',
   },
 };
