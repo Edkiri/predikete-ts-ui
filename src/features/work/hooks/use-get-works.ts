@@ -5,27 +5,51 @@ import { AppContext, AppContextInterface } from '../../../App.context';
 import { API_URL } from '../../../constants';
 import { Work } from '../interfaces';
 
+interface ApiWorkResponse {
+  clientName: string;
+  description: string;
+  id: number;
+  isFinished: boolean;
+  type: {
+    id: number;
+    name: string;
+  };
+}
+
 export const useGetWorks = () => {
   const [works, setWorks] = useState<Work[]>([]);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const { authToken } = useContext(AppContext) as AppContextInterface;
+  const { user } = useContext(AppContext) as AppContextInterface;
   const url = `${API_URL}/work`;
 
   useEffect(() => {
     (async () => {
       try {
-        const axiosResponse = await axios.get(url, {
+        setLoading(true);
+        const { data } = await axios.get<ApiWorkResponse[]>(url, {
           headers: {
-            Authorization: `Bearer ${authToken}`,
+            Authorization: `Bearer ${user?.authToken}`,
           },
         });
-        console.log(axiosResponse);
+        const formatedWorks = data.map((work) => {
+          const { clientName, description, id, isFinished, type } = work;
+          return {
+            clientName,
+            description,
+            id,
+            isFinished,
+            type: type.name,
+          };
+        });
+        setWorks(formatedWorks);
+        setLoading(false);
       } catch (err) {
-        console.log(err);
+        setLoading(false);
+        setError('Error cargando las obras');
       }
     })();
-  }, [url]);
+  }, [url, user]);
 
   return { error, loading, works };
 };

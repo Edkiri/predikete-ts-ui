@@ -1,9 +1,10 @@
 import axios from 'axios';
-import { useContext } from 'react';
+import { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import { AppContext, AppContextInterface } from '../../App.context';
 import { API_URL } from '../../constants';
 import { useInputValue } from '../../hooks';
-
 import './Login.css';
 
 interface ApiLoginResponse {
@@ -15,10 +16,13 @@ interface ApiLoginResponse {
 
 export function Login() {
   const { login } = useContext(AppContext) as AppContextInterface;
+  const navigate = useNavigate();
   const password = useInputValue('');
+  const [error, setError] = useState('');
 
   const handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault();
+    setError('');
     const url = `${API_URL}/auth/login`;
     try {
       const { data } = await axios.post<ApiLoginResponse>(url, {
@@ -26,8 +30,9 @@ export function Login() {
         password: password.value,
       });
       login({ authToken: data.access_token, id: data.user.id });
+      navigate('/');
     } catch (err) {
-      console.log('ERROR', err);
+      setError('Contraseña incorrecta');
     }
   };
 
@@ -43,6 +48,7 @@ export function Login() {
             {...password}
           />
         </label>
+        {error && <span className="FormError">{error}</span>}
         <button type="button">Login</button>
       </form>
     </div>

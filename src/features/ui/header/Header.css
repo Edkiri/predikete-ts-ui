@@ -8,6 +8,8 @@
   color: white;
   z-index: 2;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
+  margin-bottom:2.5rem;
+  background-color: var(--color-dark);
 }
 #Header .logo {
   width: 130px;
