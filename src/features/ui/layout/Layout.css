@@ -1,6 +1,6 @@
 #Layout {
   width: 100vw;
-  overflow: hidden;
+  overflow-x: hidden;
   min-height: 100vh;
   background-color: #FFF;
   position: relative;
