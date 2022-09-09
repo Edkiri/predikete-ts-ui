@@ -5,7 +5,7 @@ import { AppContext, AppContextInterface } from '../../../App.context';
 import { API_URL } from '../../../constants';
 import { Work } from '../interfaces';
 
-interface ApiWorkResponse {
+export interface ApiWorkResponse {
   clientName: string;
   description: string;
   id: number;
@@ -51,5 +51,9 @@ export const useGetWorks = () => {
     })();
   }, [url, user]);
 
-  return { error, loading, works };
+  const onCreate = (work: Work) => {
+    setWorks([...works, work]);
+  };
+
+  return { error, loading, works, onCreate };
 };

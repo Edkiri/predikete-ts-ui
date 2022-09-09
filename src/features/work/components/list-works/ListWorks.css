@@ -4,7 +4,33 @@
   flex-direction: column;
   align-items: center;
 }
-.ListWorksContent {
+.ListWorksContainer > .TitleContainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem;
+  margin-bottom: 2rem;
+}
+.ListWorksContainer > .TitleContainer .AddButton {
+  display: flex;
+  align-items: center;
+  padding: 0.6rem 0.8rem;
+  border-radius: 5px;
+  background-color: var(--color-dark);
+  color:#FFF;
+  font-size: 1.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+}
+.ListWorksContainer > .TitleContainer .AddButton .AddIcon {
+  width: 1.8rem;
+  height: 1.8rem;
+  color: #FFF;
+  margin-right: 0.5rem;
+}
+.ListWorksContainer .ListWorksContent {
   width: 100%;
   display: flex;
   flex-direction: column;

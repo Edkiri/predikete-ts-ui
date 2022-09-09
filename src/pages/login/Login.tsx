@@ -49,7 +49,9 @@ export function Login() {
           />
         </label>
         {error && <span className="FormError">{error}</span>}
-        <button type="button">Login</button>
+        <button className="SubmitButton" type="button">
+          Login
+        </button>
       </form>
     </div>
   );

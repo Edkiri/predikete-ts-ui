@@ -1,0 +1,64 @@
+.ModalContainer {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0, 0.8);
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.CreateWorkModal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #FFF;
+  padding: 28px 16px;
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 130px;
+  border-radius: 5px;
+  z-index: 3;
+}
+.CreateWorkModal .CloseButton {
+  background-color: transparent;
+  border: none;
+  font-size: 2.5rem;
+  font-weight: 700;
+  align-self: flex-end;
+  margin-top: -0.5rem;
+  cursor: pointer;
+}
+.CreateWorkModal h3 {
+  text-align: center;
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+}
+.CreateWorkModal label {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.6rem;
+  border-bottom: 1px solid gray;
+  margin-top: 1.5rem;
+}
+.CreateWorkModal label input {
+  outline: none;
+  border: none;
+  background-color: transparent;
+  margin-top: 0.2rem;
+  padding: 0.8rem 0.3rem;
+  font-size: 1.8rem;
+}
+.CreateWorkModal select {
+  margin-top: 0.6rem;
+  font-size: 1.6rem;
+  padding: 0.8rem 0.1rem;
+  background-color: transparent;
+  border-radius: 2px;
+  border: none;
+}
+.CreateWorkModal button {
+  margin-top: 4rem;
+}
