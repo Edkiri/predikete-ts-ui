@@ -1,3 +1,3 @@
 export * from './home/Home';
-export * from './budget/Budget';
+export * from './budget/BudgetPage';
 export * from './login/Login';

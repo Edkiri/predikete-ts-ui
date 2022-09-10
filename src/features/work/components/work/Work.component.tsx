@@ -14,7 +14,7 @@ export function Work({ work, isDetail = false }: WorkProps) {
   const navigate = useNavigate();
 
   const navigateToBudget = () => {
-    navigate('/budget', { replace: true, state: { work } });
+    navigate('/budget', { state: { work } });
   };
   const handleDeleteWork = () => {};
 
@@ -22,7 +22,7 @@ export function Work({ work, isDetail = false }: WorkProps) {
     <div className="WorkContainer">
       <div className="TitleContainer">
         <div className="TitleContainerLeft">
-          <h3>{work.description}</h3>
+          <h3 className="WorkTitle">{work.description}</h3>
           <span className="WorkType">{work.type}</span>
         </div>
         {isDetail ? (

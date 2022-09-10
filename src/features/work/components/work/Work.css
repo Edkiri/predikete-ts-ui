@@ -13,6 +13,13 @@
   display: flex;
   align-items: center;
 }
+.WorkContainer .TitleContainer .TitleContainerLeft button {
+  background-color: transparent;
+  border: none;
+}
+.WorkContainer .TitleContainer .TitleContainerLeft button.isDetailt {
+  cursor: pointer;
+}
 .WorkContainer .TitleContainer h3 {
   font-size: 2.2rem;
   padding-bottom: 0.4rem;

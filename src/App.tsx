@@ -5,7 +5,7 @@ import { Layout } from './features/ui';
 
 import { AppContext } from './App.context';
 import { RequireAuth, useAuth } from './features/user';
-import { Budget, Home, Login } from './pages';
+import { BudgetPage, Home, Login } from './pages';
 import './global.css';
 
 export function App() {
@@ -25,7 +25,7 @@ export function App() {
           path="/budget"
           element={
             <RequireAuth>
-              <Budget />
+              <BudgetPage />
             </RequireAuth>
           }
         />

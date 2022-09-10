@@ -1,0 +1,30 @@
+.BudgetContainer {
+  width: 100%;
+  border: 1px solid var(--color-dark);
+  margin-bottom: 3.5rem;
+}
+.BudgetHeader {
+  padding: 1.5rem;
+  background-color: var(--color-medium);
+}
+.BudgetHeader h3 {
+  font-size: 1.6rem;
+}
+.BudgetBody {
+  width: 100%;
+}
+.BudgetContainer .Row {
+  width: 100%;
+  display: flex;
+}
+.BudgetContainer .Row > div {
+  padding: 0.6rem 1.5rem;
+  font-size: 1.6rem;
+  width: 25%;
+}
+.BudgetContainer .Row.RowHeader span {
+  font-size: 1.5rem;
+}
+.BudgetContainer .Row.RowHeader div {
+  background-color: var(--color-light);
+}

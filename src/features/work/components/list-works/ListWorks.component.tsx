@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FaPlus } from 'react-icons/fa';
+import { CreateButton } from '../../../ui';
 
 import { useGetWorks } from '../../hooks';
 import { CreateWorkModal } from '../create-work-modal/CreateWorkModal.component';
@@ -23,10 +23,7 @@ export function ListWorks() {
     <div className="ListWorksContainer">
       <div className="TitleContainer">
         <h1>Obras</h1>
-        <button onClick={openModal} type="button" className="AddButton">
-          <FaPlus className="AddIcon" />
-          Crear
-        </button>
+        <CreateButton onClick={openModal} />
       </div>
       <div className="ListWorksContent">
         {works.length > 0 &&
