@@ -2,7 +2,10 @@ import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { useGetBudget } from '../../features/budget/hooks';
-import { Budget, CreateBudgetModal } from '../../features/budget/components';
+import {
+  Budget,
+  CreateOrUpdateBudgetModal,
+} from '../../features/budget/components';
 import { Work } from '../../features/work/components';
 import { Work as WorkInterface } from '../../features/work/interfaces';
 import './Budget.css';
@@ -14,14 +17,14 @@ interface BudgetState {
 
 export function BudgetPage() {
   const { work } = useLocation().state as BudgetState;
-  const { budgets, onCreate } = useGetBudget(work.id);
-  const [displayModal, setDisplayModal] = useState(false);
+  const { budgets, onCreate, onUpdate } = useGetBudget(work.id);
+  const [createModal, setCreateModal] = useState(false);
 
-  const openModal = () => {
-    setDisplayModal(true);
+  const openCreateModal = () => {
+    setCreateModal(true);
   };
-  const closeModal = () => {
-    setDisplayModal(false);
+  const closeCreateModal = () => {
+    setCreateModal(false);
   };
 
   return (
@@ -30,19 +33,24 @@ export function BudgetPage() {
       <div className="BudgetListContainer">
         <div className="BudgetPageTitleContainer">
           <h1>Partidas</h1>
-          <CreateButton onClick={openModal} />
+          <CreateButton onClick={openCreateModal} />
         </div>
         <div className="BudgetList">
           {budgets.map((budget) => (
-            <Budget key={budget.id} budget={budget} />
+            <Budget
+              work={work}
+              key={budget.id}
+              budget={budget}
+              onUpdate={onUpdate}
+            />
           ))}
         </div>
       </div>
-      {displayModal && (
-        <CreateBudgetModal
+      {createModal && (
+        <CreateOrUpdateBudgetModal
           work={work}
           onCreate={onCreate}
-          closeModal={closeModal}
+          closeModal={closeCreateModal}
         />
       )}
     </div>

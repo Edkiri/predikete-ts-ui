@@ -6,9 +6,38 @@
 .BudgetHeader {
   padding: 1.5rem;
   background-color: var(--color-medium);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .BudgetHeader h3 {
   font-size: 1.6rem;
+  padding-right: 2rem;
+}
+.BudgetHeader .IconsContainer {
+  min-width: 70px;
+  display: flex;
+  align-self: flex-start;
+  justify-content: space-between;
+}
+.BudgetHeader .IconsContainer button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+.BudgetHeader .IconsContainer button:hover .TrashIcon {
+  color: var(--color-error);
+}
+.BudgetHeader .IconsContainer button:hover .EditIcon {
+  color: var(--color-dark);
+}
+.BudgetHeader .TrashIcon {
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+}
+.BudgetHeader .EditIcon {
+  min-width: 2.5rem;
+  min-height: 2.5rem;
 }
 .BudgetBody {
   width: 100%;

@@ -10,26 +10,36 @@ import { Budget } from '../../interfaces';
 import './CreateBudgetModal.css';
 
 interface ModalProps {
-  closeModal: () => void;
   work: Work;
-  onCreate: (budget: Budget) => void;
+  closeModal: () => void;
+  onCreate?: (budget: Budget) => void;
+  budget?: Budget;
+  onUpdate?: (budget: Budget) => void;
 }
 
-export function CreateBudgetModal({ work, closeModal, onCreate }: ModalProps) {
+export function CreateOrUpdateBudgetModal({
+  work,
+  budget,
+  closeModal,
+  onCreate,
+  onUpdate,
+}: ModalProps) {
   const { user } = useContext(AppContext) as AppContextInterface;
   const [errors, setErrors] = useState<string[]>([]);
 
   const { budgetUnits } = useGetBudgetUnits();
-  const [budgetUnit, setBudgetUnit] = useState('UND');
-  const description = useInputValue('');
-  const quantity = useInputValue(1);
-  const unitPrice = useInputValue('');
+  const [budgetUnit, setBudgetUnit] = useState(
+    budget ? budget.unit.name : 'UND',
+  );
+  const description = useInputValue(budget ? budget.description : '');
+  const quantity = useInputValue(budget ? budget.quantity : 1);
+  const unitPrice = useInputValue(budget ? budget.unitPrice : '');
 
   const handleOptionChange = (event: React.FormEvent<HTMLSelectElement>) => {
     setBudgetUnit(event.currentTarget.value);
   };
 
-  const handleSubmit = async (event: React.SyntheticEvent) => {
+  const handleCreate = async (event: React.SyntheticEvent) => {
     event.preventDefault();
     try {
       const url = `${API_URL}/work/${work.id}/budget`;
@@ -45,9 +55,39 @@ export function CreateBudgetModal({ work, closeModal, onCreate }: ModalProps) {
           Authorization: `Bearer ${user?.authToken}`,
         },
       });
-      onCreate(data);
-      closeModal();
-      console.log(data);
+      if (onCreate) {
+        onCreate(data);
+        closeModal();
+      }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
+      if (Array.isArray(err.response.data.message))
+        setErrors([...err.response.data.message]);
+      else {
+        setErrors([err.response.data.message]);
+      }
+    }
+  };
+
+  const handleUpdate = async (event: React.SyntheticEvent) => {
+    event.preventDefault();
+    try {
+      const url = `${API_URL}/work/${work.id}/budget/${budget?.id}`;
+      const payload = {
+        description: description.value,
+        quantity: Number(quantity.value),
+        unitPrice: Number(unitPrice.value),
+        unitName: budgetUnit,
+      };
+      const { data } = await axios.put<Budget>(url, payload, {
+        headers: {
+          Authorization: `Bearer ${user?.authToken}`,
+        },
+      });
+      if (onUpdate) {
+        onUpdate(data);
+        closeModal();
+      }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       if (Array.isArray(err.response.data.message))
@@ -77,7 +117,7 @@ export function CreateBudgetModal({ work, closeModal, onCreate }: ModalProps) {
                 <option
                   key={unit.id}
                   value={unit.name}
-                  selected={unit.name === 'UND'}
+                  selected={unit.name === budgetUnit}
                 >
                   {unit.name}
                 </option>
@@ -99,8 +139,12 @@ export function CreateBudgetModal({ work, closeModal, onCreate }: ModalProps) {
               {err}
             </span>
           ))}
-        <button type="submit" className="SubmitButton" onClick={handleSubmit}>
-          Crear
+        <button
+          type="submit"
+          className="SubmitButton"
+          onClick={budget ? handleUpdate : handleCreate}
+        >
+          {budget ? 'Actualizar' : 'Crear'}
         </button>
       </form>
     </ModalContainer>

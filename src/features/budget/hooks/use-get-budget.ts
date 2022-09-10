@@ -28,9 +28,14 @@ export const useGetBudget = (workId: number) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [workId]);
 
-  const onCreate = (budget: Budget) => {
-    setBudgets([...budgets, budget]);
+  const onCreate = (payload: Budget) => {
+    setBudgets([...budgets, payload]);
   };
 
-  return { loading, budgets, onCreate };
+  const onUpdate = (payload: Budget) => {
+    const newBudgetList = budgets.filter((budget) => budget.id !== payload.id);
+    setBudgets([...newBudgetList, payload]);
+  };
+
+  return { loading, budgets, onCreate, onUpdate };
 };
