@@ -1,0 +1,60 @@
+.CreateBudgetForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #FFF;
+  padding: 28px 16px;
+  width: 100%;
+  max-width: 450px;
+  margin-bottom: 200px;
+  border-radius: 5px;
+  z-index: 3;
+}
+.CreateBudgetForm .CloseButton {
+  background-color: transparent;
+  border: none;
+  font-size: 2.5rem;
+  font-weight: 700;
+  align-self: flex-end;
+  margin-top: -0.5rem;
+  cursor: pointer;
+}
+.CreateBudgetForm h3 {
+  text-align: center;
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+}
+.CreateBudgetForm label {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.6rem;
+  border-bottom: 1px solid gray;
+  margin-top: 1.5rem;
+}
+.CreateBudgetForm label input {
+  outline: none;
+  border: none;
+  background-color: transparent;
+  margin-top: 0.2rem;
+  padding: 0.8rem 0.3rem;
+  font-size: 1.8rem;
+}
+.CreateBudgetForm select {
+  margin-top: 0.6rem;
+  font-size: 1.6rem;
+  padding: 0.8rem 0.1rem;
+  background-color: transparent;
+  border-radius: 2px;
+  border: none;
+}
+.CreateBudgetForm button {
+  margin-top: 4rem;
+}
+.CreateBudgetForm .UnitContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.6rem;
+}
+.CreateBudgetForm .UnitContainer > label {
+  width: 30%;
+}

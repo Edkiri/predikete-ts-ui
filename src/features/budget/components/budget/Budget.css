@@ -19,8 +19,8 @@
 }
 .BudgetContainer .Row > div {
   padding: 0.6rem 1.5rem;
-  font-size: 1.6rem;
-  width: 25%;
+  font-size: 2rem;
+  width: 33.33%;
 }
 .BudgetContainer .Row.RowHeader span {
   font-size: 1.5rem;

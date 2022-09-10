@@ -9,15 +9,14 @@ export function BudgetRow({ budget }: BudgetProps) {
   return (
     <div className={`Row ${!budget && 'RowHeader'}`}>
       <div>
-        <span>{budget?.quantity || 'Cantidad'}</span>
+        <span>
+          {budget ? `${budget.quantity} ${budget.unit.name}` : 'Cantidad'}
+        </span>
       </div>
       <div>
         <span>
           {budget ? formatNumber(budget.unitPrice) : 'Precio unitario'}
         </span>
-      </div>
-      <div>
-        <span>{budget?.unit.name || 'Unidad'}</span>
       </div>
       <div>
         <span>
