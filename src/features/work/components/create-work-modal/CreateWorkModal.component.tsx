@@ -1,6 +1,7 @@
 import { useState, useContext } from 'react';
 import axios from 'axios';
 
+import { ModalContainer } from '../../../ui';
 import { AppContext, AppContextInterface } from '../../../../App.context';
 import { API_URL } from '../../../../constants';
 import { useInputValue } from '../../../../hooks';
@@ -52,7 +53,7 @@ export function CreateWorkModal({ closeModal, onCreate }: ModalProps) {
   };
 
   return (
-    <div className="ModalContainer">
+    <ModalContainer>
       <form className="CreateWorkModal">
         <button className="CloseButton" type="button" onClick={closeModal}>
           X
@@ -86,6 +87,6 @@ export function CreateWorkModal({ closeModal, onCreate }: ModalProps) {
           Crear
         </button>
       </form>
-    </div>
+    </ModalContainer>
   );
 }
