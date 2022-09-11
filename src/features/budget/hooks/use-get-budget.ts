@@ -37,5 +37,9 @@ export const useGetBudget = (workId: number) => {
     setBudgets([...newBudgetList, payload]);
   };
 
-  return { loading, budgets, onCreate, onUpdate };
+  const onDelete = (budgetId: number) => {
+    setBudgets(budgets.filter((budget) => budget.id !== budgetId));
+  };
+
+  return { loading, budgets, onCreate, onUpdate, onDelete };
 };

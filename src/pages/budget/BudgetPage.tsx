@@ -17,7 +17,7 @@ interface BudgetState {
 
 export function BudgetPage() {
   const { work } = useLocation().state as BudgetState;
-  const { budgets, onCreate, onUpdate } = useGetBudget(work.id);
+  const { budgets, onCreate, onUpdate, onDelete } = useGetBudget(work.id);
   const [createModal, setCreateModal] = useState(false);
 
   const openCreateModal = () => {
@@ -42,6 +42,7 @@ export function BudgetPage() {
               key={budget.id}
               budget={budget}
               onUpdate={onUpdate}
+              onDelete={onDelete}
             />
           ))}
         </div>
