@@ -3,11 +3,21 @@ import './SecondaryButton.css';
 interface ButtonProps {
   onClick: () => void;
   title: string;
+  disabled?: boolean;
 }
 
-export function SecondaryButton({ onClick, title }: ButtonProps) {
+export function SecondaryButton({
+  onClick,
+  title,
+  disabled = false,
+}: ButtonProps) {
   return (
-    <button type="button" onClick={onClick} className="SecondaryButton">
+    <button
+      className="SecondaryButton"
+      onClick={onClick}
+      type="button"
+      disabled={disabled}
+    >
       {title}
     </button>
   );

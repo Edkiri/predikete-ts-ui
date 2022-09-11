@@ -23,3 +23,6 @@
 .CreateButton:hover .AddIcon {
   color: #FFF;
 }
+.CreateButton:disabled {
+  opacity: 0.3;
+}

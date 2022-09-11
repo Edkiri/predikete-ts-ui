@@ -29,7 +29,7 @@ h1 {
 }
 .FormError {
   color: var(--color-error);
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   display: block;
   text-align: center;
   margin-top: 1rem;

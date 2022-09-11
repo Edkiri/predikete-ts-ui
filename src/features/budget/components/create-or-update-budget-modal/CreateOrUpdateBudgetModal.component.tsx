@@ -3,7 +3,7 @@ import { useContext, useState } from 'react';
 import { AppContext, AppContextInterface } from '../../../../App.context';
 import { API_URL } from '../../../../constants';
 import { useInputValue } from '../../../../hooks';
-import { ModalContainer } from '../../../ui';
+import { Loader, ModalContainer } from '../../../ui';
 import { Work } from '../../../work/interfaces';
 import { useGetBudgetUnits } from '../../hooks';
 import { Budget } from '../../interfaces';
@@ -26,6 +26,7 @@ export function CreateOrUpdateBudgetModal({
 }: ModalProps) {
   const { user } = useContext(AppContext) as AppContextInterface;
   const [errors, setErrors] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const { budgetUnits } = useGetBudgetUnits();
   const [budgetUnit, setBudgetUnit] = useState(
@@ -41,6 +42,7 @@ export function CreateOrUpdateBudgetModal({
 
   const handleCreate = async (event: React.SyntheticEvent) => {
     event.preventDefault();
+    setLoading(true);
     try {
       const url = `${API_URL}/work/${work.id}/budget`;
       const payload = {
@@ -55,12 +57,14 @@ export function CreateOrUpdateBudgetModal({
           Authorization: `Bearer ${user?.authToken}`,
         },
       });
+      setLoading(false);
       if (onCreate) {
         onCreate(data);
         closeModal();
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
+      setLoading(false);
       if (Array.isArray(err.response.data.message))
         setErrors([...err.response.data.message]);
       else {
@@ -71,6 +75,7 @@ export function CreateOrUpdateBudgetModal({
 
   const handleUpdate = async (event: React.SyntheticEvent) => {
     event.preventDefault();
+    setLoading(true);
     try {
       const url = `${API_URL}/work/${work.id}/budget/${budget?.id}`;
       const payload = {
@@ -88,8 +93,10 @@ export function CreateOrUpdateBudgetModal({
         onUpdate(data);
         closeModal();
       }
+      setLoading(false);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
+      setLoading(false);
       if (Array.isArray(err.response.data.message))
         setErrors([...err.response.data.message]);
       else {
@@ -97,6 +104,8 @@ export function CreateOrUpdateBudgetModal({
       }
     }
   };
+
+  const submitButtonName = budget ? 'Actualizar' : 'Crear';
 
   return (
     <ModalContainer>
@@ -107,12 +116,21 @@ export function CreateOrUpdateBudgetModal({
         <h3>Nueva partida</h3>
         <label htmlFor="description">
           Descripción
-          <input id="description" type="text" {...description} />
+          <input
+            id="description"
+            type="text"
+            {...description}
+            disabled={loading}
+          />
         </label>
         <div className="UnitContainer">
           <label htmlFor="budgetUnit">
             Unidad
-            <select id="budgetUnit" onChange={handleOptionChange}>
+            <select
+              id="budgetUnit"
+              onChange={handleOptionChange}
+              disabled={loading}
+            >
               {budgetUnits.map((unit) => (
                 <option
                   key={unit.id}
@@ -126,11 +144,21 @@ export function CreateOrUpdateBudgetModal({
           </label>
           <label htmlFor="quantity">
             Cantidad
-            <input id="quantity" type="number" {...quantity} />
+            <input
+              id="quantity"
+              type="number"
+              {...quantity}
+              disabled={loading}
+            />
           </label>
           <label htmlFor="unitPrice">
             Precio
-            <input id="unitPrice" type="number" {...unitPrice} />
+            <input
+              id="unitPrice"
+              type="number"
+              {...unitPrice}
+              disabled={loading}
+            />
           </label>
         </div>
         {errors &&
@@ -143,8 +171,13 @@ export function CreateOrUpdateBudgetModal({
           type="submit"
           className="SubmitButton"
           onClick={budget ? handleUpdate : handleCreate}
+          disabled={loading}
         >
-          {budget ? 'Actualizar' : 'Crear'}
+          {loading ? (
+            <Loader loading={loading} size={22} color="#FFF" />
+          ) : (
+            submitButtonName
+          )}
         </button>
       </form>
     </ModalContainer>

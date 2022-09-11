@@ -19,19 +19,17 @@ export interface ApiWorkResponse {
 export const useGetWorks = () => {
   const [works, setWorks] = useState<Work[]>([]);
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const { user } = useContext(AppContext) as AppContextInterface;
-  const url = `${API_URL}/work`;
 
   useEffect(() => {
-    (async () => {
-      try {
-        setLoading(true);
-        const { data } = await axios.get<ApiWorkResponse[]>(url, {
-          headers: {
-            Authorization: `Bearer ${user?.authToken}`,
-          },
-        });
+    const url = `${API_URL}/work`;
+    setLoading(true);
+    axios
+      .get<ApiWorkResponse[]>(url, {
+        headers: { Authorization: `Bearer ${user?.authToken}` },
+      })
+      .then(({ data }) => {
         const formatedWorks = data.map((work) => {
           const { clientName, description, id, isFinished, type } = work;
           return {
@@ -44,12 +42,13 @@ export const useGetWorks = () => {
         });
         setWorks(formatedWorks);
         setLoading(false);
-      } catch (err) {
+      })
+      .catch(() => {
         setLoading(false);
         setError('Error cargando las obras');
-      }
-    })();
-  }, [url, user]);
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onCreate = (work: Work) => {
     setWorks([...works, work]);

@@ -13,3 +13,6 @@
   background-color: var(--color-dark);
   color: white;
 }
+.SecondaryButton:disabled {
+  opacity: 0.3;
+}

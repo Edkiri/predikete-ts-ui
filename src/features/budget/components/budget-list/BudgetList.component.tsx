@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { CreateButton } from '../../../ui';
+import { CreateButton, Loader } from '../../../ui';
 import { Work } from '../../../work/interfaces';
 import { useGetBudget } from '../../hooks';
 import { Budget } from '../budget/Budget.component';
 import { CreateOrUpdateBudgetModal } from '../create-or-update-budget-modal/CreateOrUpdateBudgetModal.component';
+import './BudgetList.css';
 
 interface BudgetListProps {
   work: Work;
@@ -11,7 +12,9 @@ interface BudgetListProps {
 
 export function BudgetList({ work }: BudgetListProps) {
   const [createModal, setCreateModal] = useState(false);
-  const { budgets, onCreate, onUpdate, onDelete } = useGetBudget(work.id);
+  const { budgets, onCreate, onUpdate, onDelete, loading } = useGetBudget(
+    work.id,
+  );
 
   const openCreateModal = () => {
     setCreateModal(true);
@@ -26,17 +29,24 @@ export function BudgetList({ work }: BudgetListProps) {
         <h1>Partidas</h1>
         <CreateButton onClick={openCreateModal} />
       </div>
-      <div className="BudgetList">
-        {budgets.map((budget) => (
-          <Budget
-            work={work}
-            key={budget.id}
-            budget={budget}
-            onUpdate={onUpdate}
-            onDelete={onDelete}
-          />
-        ))}
-      </div>
+      {loading ? (
+        <Loader loading={loading} />
+      ) : (
+        <div className="BudgetList">
+          {budgets.map((budget) => (
+            <Budget
+              work={work}
+              key={budget.id}
+              budget={budget}
+              onUpdate={onUpdate}
+              onDelete={onDelete}
+            />
+          ))}
+        </div>
+      )}
+      {!loading && budgets.length === 0 && (
+        <p className="EmptyBudgetsText">No existen partidas</p>
+      )}
       {createModal && (
         <CreateOrUpdateBudgetModal
           work={work}

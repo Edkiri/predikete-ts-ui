@@ -8,20 +8,19 @@ import { Budget } from '../interfaces';
 export const useGetBudget = (workId: number) => {
   const { user } = useContext(AppContext) as AppContextInterface;
   const [budgets, setBudgets] = useState<Budget[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
     (async () => {
-      setLoading(true);
       try {
         const url = `${API_URL}/work/${workId}/budget`;
         const { data } = await axios.get<Budget[]>(url, {
           headers: { Authorization: `Bearer ${user?.authToken}` },
         });
-        setBudgets(data);
         setLoading(false);
+        setBudgets(data);
       } catch (err) {
-        console.log(err);
         setLoading(false);
       }
     })();

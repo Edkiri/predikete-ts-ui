@@ -11,6 +11,7 @@
   align-items: center;
   padding: 1.2rem;
   margin-bottom: 3rem;
+  border-bottom: 1px solid grey;
 }
 .ListWorksContainer .ListWorksContent {
   width: 100%;

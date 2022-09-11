@@ -13,3 +13,6 @@
   background-color: var(--color-error);
   color: white;
 }
+.DeleteButton:disabled {
+  opacity: 0.3;
+}
