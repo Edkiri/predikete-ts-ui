@@ -2,17 +2,12 @@ import { Link } from 'react-router-dom';
 
 import './Navbar.css';
 
-interface NavbarProps {
-  hideMenu: () => void;
-}
-
-export function Navbar({ hideMenu }: NavbarProps) {
+export function Navbar() {
   return (
     <nav id="Menu" className="Menu">
       <ul>
-        <Link onClick={hideMenu} to="/">
-          Home
-        </Link>
+        <Link to="/">Obras</Link>
+        <Link to="/config">Configuración</Link>
       </ul>
     </nav>
   );
