@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
 import axios from 'axios';
 
-import { ModalContainer } from '../../../ui';
+import { Loader, ModalContainer } from '../../../ui';
 import { AppContext, AppContextInterface } from '../../../../App.context';
 import { API_URL } from '../../../../constants';
 import { useInputValue } from '../../../../hooks';
@@ -18,12 +18,15 @@ export function CreateWorkModal({ closeModal, onCreate }: ModalProps) {
   const { user } = useContext(AppContext) as AppContextInterface;
   const { workTypes } = useGetWorkTypes();
   const [errors, setErrors] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
+
   const [workType, setWorkType] = useState('Remodelación');
   const description = useInputValue('');
   const clientName = useInputValue('');
 
   const handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault();
+    setLoading(true);
     const payload = {
       typeName: workType,
       description: description.value,
@@ -37,9 +40,11 @@ export function CreateWorkModal({ closeModal, onCreate }: ModalProps) {
         },
       });
       onCreate({ ...data, type: data.type.name });
+      setLoading(false);
       closeModal();
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
+      setLoading(false);
       if (Array.isArray(err.response.data.message))
         setErrors([...err.response.data.message]);
       else {
@@ -61,15 +66,29 @@ export function CreateWorkModal({ closeModal, onCreate }: ModalProps) {
         <h3>Nueva obra</h3>
         <label htmlFor="description">
           Descripción
-          <input id="description" type="text" {...description} />
+          <input
+            id="description"
+            type="text"
+            {...description}
+            disabled={loading}
+          />
         </label>
         <label htmlFor="clientName">
           Cliente
-          <input id="clientName" type="text" {...clientName} />
+          <input
+            id="clientName"
+            type="text"
+            {...clientName}
+            disabled={loading}
+          />
         </label>
         <label htmlFor="workType">
           Tipo
-          <select id="workType" onChange={handleOptionChange}>
+          <select
+            id="workType"
+            onChange={handleOptionChange}
+            disabled={loading}
+          >
             {workTypes.map((type) => (
               <option key={type.id} value={type.name}>
                 {type.name}
@@ -84,7 +103,11 @@ export function CreateWorkModal({ closeModal, onCreate }: ModalProps) {
             </span>
           ))}
         <button type="submit" className="SubmitButton" onClick={handleSubmit}>
-          Crear
+          {loading ? (
+            <Loader loading={loading} size={22} color="#FFF" />
+          ) : (
+            'Crear'
+          )}
         </button>
       </form>
     </ModalContainer>

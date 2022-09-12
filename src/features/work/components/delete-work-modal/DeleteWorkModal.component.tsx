@@ -1,5 +1,5 @@
-import { useState, useContext } from 'react';
 import axios from 'axios';
+import { useContext, useState } from 'react';
 import { AppContext, AppContextInterface } from '../../../../App.context';
 import { API_URL } from '../../../../constants';
 import {
@@ -8,28 +8,25 @@ import {
   ModalContainer,
   SecondaryButton,
 } from '../../../ui';
-import { Budget } from '../../interfaces';
-import './DeleteBudgetModal.css';
+import { Work } from '../../interfaces';
 
-interface DeleteBudgetProps {
-  budget: Budget;
-  workId: number;
+interface DeleteWorkProps {
+  work: Work;
   closeModal: () => void;
-  onDelete: (budgetId: number) => void;
+  onDelete: () => void;
 }
 
-export function DeleteBudgetModal({
+export function DeleteWorkModal({
+  work,
   closeModal,
-  budget,
-  workId,
   onDelete,
-}: DeleteBudgetProps) {
+}: DeleteWorkProps) {
   const { user } = useContext(AppContext) as AppContextInterface;
   const [loading, setLoading] = useState(false);
 
   const handleDelete = async () => {
     setLoading(true);
-    const url = `${API_URL}/work/${workId}/budget/${budget.id}`;
+    const url = `${API_URL}/work/${work.id}`;
     try {
       const { data } = await axios.delete(url, {
         headers: {
@@ -37,9 +34,9 @@ export function DeleteBudgetModal({
         },
       });
       setLoading(false);
-      if (data.message === 'Budget deleted') {
-        onDelete(budget.id);
+      if (data.message === 'Work deleted') {
         closeModal();
+        onDelete();
       }
     } catch (err) {
       setLoading(false);
@@ -50,8 +47,8 @@ export function DeleteBudgetModal({
   return (
     <ModalContainer>
       <div className="DeleteModalContainer">
-        <h3>¿Eliminar esta partida?</h3>
-        <p className="DescriptionText">{budget.description}</p>
+        <h3>¿Eliminar esta obra?</h3>
+        <p className="DescriptionText">{work.description}</p>
         <div className="ButtonsContainer">
           <SecondaryButton
             title="Cancelar"

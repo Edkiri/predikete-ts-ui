@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { DeleteButton } from '../../../ui/delete-button/DeleteButton.component';
 import { SecondaryButton } from '../../../ui/secondary-button/SecondaryButton.component';
 import { Work as WorkInterface } from '../../interfaces';
+import { DeleteWorkModal } from '../delete-work-modal/DeleteWorkModal.component';
 
 import './Work.css';
 
@@ -12,11 +14,17 @@ interface WorkProps {
 
 export function Work({ work, isDetail = false }: WorkProps) {
   const navigate = useNavigate();
+  const [displayModal, setDisplayModal] = useState(false);
 
   const navigateToBudget = () => {
     navigate('/budget', { state: { work } });
   };
-  const handleDeleteWork = () => {};
+  const navigateToHome = () => {
+    navigate('/');
+  };
+  const handleDeleteWork = () => {
+    setDisplayModal(true);
+  };
 
   return (
     <div className="WorkContainer">
@@ -32,6 +40,13 @@ export function Work({ work, isDetail = false }: WorkProps) {
         )}
       </div>
       <span className="ClientName">{work.clientName}</span>
+      {displayModal && (
+        <DeleteWorkModal
+          work={work}
+          closeModal={() => setDisplayModal(false)}
+          onDelete={navigateToHome}
+        />
+      )}
     </div>
   );
 }

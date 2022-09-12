@@ -23,26 +23,41 @@ export function BudgetList({ work }: BudgetListProps) {
     setCreateModal(false);
   };
 
+  const total = budgets.reduce((prev, curr) => {
+    return prev + curr.quantity * curr.unitPrice;
+  }, 0);
+
   return (
     <div className="BudgetListContainer">
-      <div className="BudgetPageTitleContainer">
-        <h1>Partidas</h1>
-        <CreateButton onClick={openCreateModal} />
-      </div>
       {loading ? (
         <Loader loading={loading} />
       ) : (
-        <div className="BudgetList">
-          {budgets.map((budget) => (
-            <Budget
-              work={work}
-              key={budget.id}
-              budget={budget}
-              onUpdate={onUpdate}
-              onDelete={onDelete}
-            />
-          ))}
-        </div>
+        <>
+          <div className="InformationContainer">
+            <h2>Resumen</h2>
+            <span>
+              <strong>Partidas:</strong> {budgets.length}
+            </span>
+            <span>
+              <strong>Presupuesto total:</strong> {total}$
+            </span>
+          </div>
+          <div className="BudgetListTitleContainer">
+            <h3>Partidas</h3>
+            <CreateButton onClick={openCreateModal} />
+          </div>
+          <div className="BudgetList">
+            {budgets.map((budget) => (
+              <Budget
+                work={work}
+                key={budget.id}
+                budget={budget}
+                onUpdate={onUpdate}
+                onDelete={onDelete}
+              />
+            ))}
+          </div>
+        </>
       )}
       {!loading && budgets.length === 0 && (
         <p className="EmptyBudgetsText">No existen partidas</p>
