@@ -26,5 +26,9 @@ export const useGetWorkTypes = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return { workTypes };
+  const onCreate = (payload: WorkType) => {
+    setWorkTypes([...workTypes, payload]);
+  };
+
+  return { workTypes, onCreate };
 };
