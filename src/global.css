@@ -27,6 +27,16 @@ h1 {
   color: var(--color-dark);
   font-size: 2.4rem;
 }
+@media screen and (min-width: 450px) {
+  html {
+    font-size: 70%;
+  }
+}
+@media screen and (min-width: 650px) {
+  html {
+    font-size: 75%;
+  }
+}
 .FormError {
   color: var(--color-error);
   font-size: 1.6rem;

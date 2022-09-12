@@ -4,6 +4,7 @@
   border-bottom: 1px solid gray;
   margin-bottom: 1.5rem;
 }
+
 .WorkContainer .TitleContainer {
   display: flex;
   align-items: center;
@@ -39,4 +40,30 @@
 .WorkContainer .ClientName {
   font-size: 1.6rem;
   color: gray;
+}
+
+.WorkContainer .IconsContainer {
+  min-width: 70px;
+  display: flex;
+  align-self: flex-start;
+  justify-content: space-between;
+}
+.WorkContainer .IconsContainer button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+.WorkContainer .IconsContainer button:hover .TrashIcon {
+  color: var(--color-error);
+}
+.WorkContainer .IconsContainer button:hover .EditIcon {
+  color: var(--color-dark);
+}
+.WorkContainer .TrashIcon {
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+}
+.WorkContainer .EditIcon {
+  min-width: 2.5rem;
+  min-height: 2.5rem;
 }

@@ -2,13 +2,13 @@ import { useState } from 'react';
 import { CreateButton, Loader } from '../../../ui';
 
 import { useGetWorks } from '../../hooks';
-import { CreateWorkModal } from '../create-work-modal/CreateWorkModal.component';
+import { CreateOrUpdateWorkModal } from '../create-or-update-work-modal/CreateOrUpdateWorkModal.component';
 import { Work } from '../work/Work.component';
 
 import './ListWorks.css';
 
 export function ListWorks() {
-  const { works, onCreate, loading } = useGetWorks();
+  const { works, onCreate, onUpdate, loading } = useGetWorks();
   const [displayModal, setDisplayModal] = useState(false);
 
   const openModal = () => {
@@ -30,11 +30,13 @@ export function ListWorks() {
       ) : (
         <div className="ListWorksContent">
           {works.length > 0 &&
-            works.map((work) => <Work key={work.id} work={work} />)}
+            works.map((work) => (
+              <Work key={work.id} work={work} onUpdate={onUpdate} />
+            ))}
         </div>
       )}
       {displayModal && (
-        <CreateWorkModal onCreate={onCreate} closeModal={closeModal} />
+        <CreateOrUpdateWorkModal onCreate={onCreate} closeModal={closeModal} />
       )}
     </div>
   );

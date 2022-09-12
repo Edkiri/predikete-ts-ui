@@ -7,24 +7,31 @@ import { API_URL } from '../../../../constants';
 import { useInputValue } from '../../../../hooks';
 import { ApiWorkResponse, useGetWorkTypes } from '../../hooks';
 import { Work } from '../../interfaces';
-import './CreateWorkModal.css';
+import './CreateOrUpdateWorkModal.css';
 
 interface ModalProps {
   closeModal: () => void;
-  onCreate: (work: Work) => void;
+  work?: Work;
+  onUpdate?: (work: Work) => void;
+  onCreate?: (work: Work) => void;
 }
 
-export function CreateWorkModal({ closeModal, onCreate }: ModalProps) {
+export function CreateOrUpdateWorkModal({
+  closeModal,
+  work,
+  onCreate,
+  onUpdate,
+}: ModalProps) {
   const { user } = useContext(AppContext) as AppContextInterface;
   const { workTypes } = useGetWorkTypes();
   const [errors, setErrors] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const [workType, setWorkType] = useState('Remodelación');
-  const description = useInputValue('');
-  const clientName = useInputValue('');
+  const [workType, setWorkType] = useState(work ? work.type : 'Remodelación');
+  const description = useInputValue(work ? work.description : '');
+  const clientName = useInputValue(work ? work.clientName : '');
 
-  const handleSubmit = async (event: React.SyntheticEvent) => {
+  const handleCreateSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault();
     setLoading(true);
     const payload = {
@@ -39,9 +46,42 @@ export function CreateWorkModal({ closeModal, onCreate }: ModalProps) {
           Authorization: `Bearer ${user?.authToken}`,
         },
       });
-      onCreate({ ...data, type: data.type.name });
+      if (onCreate) {
+        onCreate({ ...data, type: data.type.name });
+        setLoading(false);
+        closeModal();
+      }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
       setLoading(false);
-      closeModal();
+      if (Array.isArray(err.response.data.message))
+        setErrors([...err.response.data.message]);
+      else {
+        setErrors([err.response.data.message]);
+      }
+    }
+  };
+
+  const handleUpdateSubmit = async (event: React.SyntheticEvent) => {
+    event.preventDefault();
+    setLoading(true);
+    const payload = {
+      typeName: workType,
+      description: description.value,
+      clientName: clientName.value,
+    };
+    try {
+      const url = `${API_URL}/work`;
+      const { data } = await axios.put<ApiWorkResponse>(url, payload, {
+        headers: {
+          Authorization: `Bearer ${user?.authToken}`,
+        },
+      });
+      if (onUpdate) {
+        onUpdate({ ...data, type: data.type.name });
+        setLoading(false);
+        closeModal();
+      }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setLoading(false);
@@ -57,13 +97,15 @@ export function CreateWorkModal({ closeModal, onCreate }: ModalProps) {
     setWorkType(event.currentTarget.value);
   };
 
+  const buttonTitle = work ? 'Actualizar' : 'Crear';
+
   return (
     <ModalContainer>
       <form className="CreateWorkModal">
         <button className="CloseButton" type="button" onClick={closeModal}>
           X
         </button>
-        <h3>Nueva obra</h3>
+        <h3>{work ? 'Actualizar obra' : 'Nueva Obra'}</h3>
         <label htmlFor="description">
           Descripción
           <input
@@ -90,7 +132,11 @@ export function CreateWorkModal({ closeModal, onCreate }: ModalProps) {
             disabled={loading}
           >
             {workTypes.map((type) => (
-              <option key={type.id} value={type.name}>
+              <option
+                key={type.id}
+                value={type.name}
+                selected={type.name === workType}
+              >
                 {type.name}
               </option>
             ))}
@@ -102,11 +148,15 @@ export function CreateWorkModal({ closeModal, onCreate }: ModalProps) {
               {err}
             </span>
           ))}
-        <button type="submit" className="SubmitButton" onClick={handleSubmit}>
+        <button
+          type="submit"
+          className="SubmitButton"
+          onClick={work ? handleUpdateSubmit : handleCreateSubmit}
+        >
           {loading ? (
             <Loader loading={loading} size={22} color="#FFF" />
           ) : (
-            'Crear'
+            buttonTitle
           )}
         </button>
       </form>

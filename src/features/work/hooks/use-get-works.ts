@@ -54,5 +54,10 @@ export const useGetWorks = () => {
     setWorks([...works, work]);
   };
 
-  return { error, loading, works, onCreate };
+  const onUpdate = (payload: Work) => {
+    const newWorkList = works.filter((work) => work.id !== payload.id);
+    setWorks([...newWorkList, payload]);
+  };
+
+  return { error, loading, works, onCreate, onUpdate };
 };
