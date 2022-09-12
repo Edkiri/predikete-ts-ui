@@ -24,5 +24,9 @@ export const useGetBudgetUnits = () => {
     })();
   }, [user?.authToken]);
 
-  return { budgetUnits };
+  const onCreate = (payload: BudgetUnit) => {
+    setBudgetUnits([...budgetUnits, payload]);
+  };
+
+  return { budgetUnits, onCreate };
 };

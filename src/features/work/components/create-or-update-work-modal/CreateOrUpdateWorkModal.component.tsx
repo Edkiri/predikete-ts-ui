@@ -101,7 +101,10 @@ export function CreateOrUpdateWorkModal({
 
   return (
     <ModalContainer>
-      <form className="CreateWorkModal">
+      <form
+        className="CreateWorkModal"
+        onSubmit={work ? handleUpdateSubmit : handleCreateSubmit}
+      >
         <button className="CloseButton" type="button" onClick={closeModal}>
           X
         </button>
@@ -148,11 +151,7 @@ export function CreateOrUpdateWorkModal({
               {err}
             </span>
           ))}
-        <button
-          type="submit"
-          className="SubmitButton"
-          onClick={work ? handleUpdateSubmit : handleCreateSubmit}
-        >
+        <button type="submit" className="SubmitButton">
           {loading ? (
             <Loader loading={loading} size={22} color="#FFF" />
           ) : (

@@ -109,7 +109,10 @@ export function CreateOrUpdateBudgetModal({
 
   return (
     <ModalContainer>
-      <form className="CreateBudgetForm">
+      <form
+        className="CreateBudgetForm"
+        onSubmit={budget ? handleUpdate : handleCreate}
+      >
         <button className="CloseButton" type="button" onClick={closeModal}>
           X
         </button>
@@ -167,12 +170,7 @@ export function CreateOrUpdateBudgetModal({
               {err}
             </span>
           ))}
-        <button
-          type="submit"
-          className="SubmitButton"
-          onClick={budget ? handleUpdate : handleCreate}
-          disabled={loading}
-        >
+        <button type="submit" className="SubmitButton" disabled={loading}>
           {loading ? (
             <Loader loading={loading} size={22} color="#FFF" />
           ) : (

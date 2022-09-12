@@ -12,7 +12,8 @@
 }
 .WorkContainer .TitleContainer .TitleContainerLeft {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
 }
 .WorkContainer .TitleContainer .TitleContainerLeft button {
   background-color: transparent;
@@ -32,7 +33,7 @@
   border-radius: 20px;
   background-color: var(--color-light);
   color: black;
-  margin-left: 1rem;
+  margin-bottom: 1rem;
 }
 .WorkContainer .TitleContainer .DeleteButton {
   justify-self: flex-end;

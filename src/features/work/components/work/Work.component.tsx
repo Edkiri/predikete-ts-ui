@@ -30,8 +30,8 @@ export function Work({ work, onUpdate, isDetail = false }: WorkProps) {
     <div className="WorkContainer">
       <div className="TitleContainer">
         <div className="TitleContainerLeft">
+          {work.type && <span className="WorkType">{work.type}</span>}
           <h3 className="WorkTitle">{work.description}</h3>
-          <span className="WorkType">{work.type}</span>
         </div>
         {isDetail ? (
           <div className="IconsContainer">

@@ -1,19 +1,18 @@
-import { useState, useContext } from 'react';
 import axios from 'axios';
-
+import { useState, useContext } from 'react';
 import { AppContext, AppContextInterface } from '../../../../App.context';
 import { API_URL } from '../../../../constants';
 import { useInputValue } from '../../../../hooks';
 import { ModalContainer } from '../../../ui';
-import { WorkType } from '../../interfaces';
-import './CreateWorkTypeModal.css';
+import { BudgetUnit } from '../../interfaces';
+import './CreateBudgetUnitModal.css';
 
 interface ModalProps {
   closeModal: () => void;
-  onCreate: (workType: WorkType) => void;
+  onCreate: (budgetUnit: BudgetUnit) => void;
 }
 
-export function CreateWorkTypeModal({ closeModal, onCreate }: ModalProps) {
+export function CreateBudgetUnitModal({ closeModal, onCreate }: ModalProps) {
   const { user } = useContext(AppContext) as AppContextInterface;
   const name = useInputValue('');
   const [errors, setErrors] = useState<string[]>([]);
@@ -23,8 +22,8 @@ export function CreateWorkTypeModal({ closeModal, onCreate }: ModalProps) {
     event.preventDefault();
     setLoading(true);
     try {
-      const url = `${API_URL}/work-type`;
-      const { data } = await axios.post<WorkType>(
+      const url = `${API_URL}/budget-unit`;
+      const { data } = await axios.post<BudgetUnit>(
         url,
         { name: name.value },
         {
@@ -47,11 +46,11 @@ export function CreateWorkTypeModal({ closeModal, onCreate }: ModalProps) {
 
   return (
     <ModalContainer>
-      <form onSubmit={handleSubmit} className="CreateWorkTypeModal">
+      <form onSubmit={handleSubmit} className="CreateBudgetUnitForm">
         <button className="CloseButton" type="button" onClick={closeModal}>
           X
         </button>
-        <h3>Nuevo tipo de obra</h3>
+        <h3>Nueva unidad de partida</h3>
         <label htmlFor="name">
           Nombre
           <input id="name" type="text" {...name} disabled={loading} />
