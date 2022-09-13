@@ -26,12 +26,13 @@ export function Login() {
     const url = `${API_URL}/auth/login`;
     try {
       const { data } = await axios.post<ApiLoginResponse>(url, {
-        username: 'orianak',
+        username: 'eduardok',
         password: password.value,
       });
       login({ authToken: data.access_token, id: data.user.id });
       navigate('/');
     } catch (err) {
+      console.log(err);
       setError('Contraseña incorrecta');
     }
   };

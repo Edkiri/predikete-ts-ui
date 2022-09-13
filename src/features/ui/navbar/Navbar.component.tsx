@@ -7,7 +7,6 @@ export function Navbar() {
     <nav id="Menu" className="Menu">
       <ul>
         <Link to="/">Obras</Link>
-        <Link to="/config">Configuración</Link>
       </ul>
     </nav>
   );

@@ -32,3 +32,22 @@
   font-size: 1.6rem;
   color: white;
 }
+
+#Header .OptionsContainer {
+  display: flex;
+  align-items: center;
+} 
+#Header .OptionsContainer button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+#Header .OptionsContainer button .Icon {
+  width: 2rem;
+  height: 2rem;
+  margin-right: 2.5rem;
+  color: white;
+}
+#Header .OptionsContainer button .Icon:hover {
+  color: black;
+}

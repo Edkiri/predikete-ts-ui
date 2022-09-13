@@ -1,7 +1,10 @@
 #Menu {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
+
 #Menu ul {
   margin: 0;
   list-style: none;
@@ -16,4 +19,8 @@
 }
 #Menu ul a:hover {
   opacity: 0.5;
+}
+
+#Menu .OptionsContainer {
+  display: flex;
 }
